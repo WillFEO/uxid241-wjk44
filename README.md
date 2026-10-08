@@ -6,4 +6,4 @@ A server-side online cookbook built with PHP and MySQL for UXID232 (Scripting fo
 
 ## AI Use
 
-- Claude (Anthropic, Claude Opus 5.5) — general consultant, answering any questions about PHP setup. No code generated yet.
+- Claude (Anthropic, Claude Opus 5.5) — general consultant, answering any questions about PHP setup. Used as a guide/teacher, looking at my code and given class materials and explaining concepts/giving code examples.
