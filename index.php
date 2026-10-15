@@ -15,5 +15,6 @@
     <input type="text" id="search-input" name="q" required>
     <button type="submit">Search</button>
   </form>
+  <p><a href="recipes.php">Browse all recipes</a></p>
 </body>
 </html>
