@@ -34,5 +34,6 @@ $recipes = mysqli_fetch_all($result, MYSQLI_ASSOC);
       <?php endforeach; ?>
     </ul>
   <?php endif; ?>
+  <p><a href="index.php">Back to Home</a></p>
 </body>
 </html>
