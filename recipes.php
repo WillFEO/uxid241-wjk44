@@ -4,11 +4,16 @@ declare(strict_types=1);
 // AI use: drafted with Claude (Anthropic), reviewed and tested by me.
 
 require __DIR__ . '/inc/db.php';
+require __DIR__ . '/inc/functions.php';
 
-// Fixed query, no user input, so mysqli_query is safe here
-$sql = 'SELECT id, title, subtitle, category FROM recipes';
-$result = mysqli_query($conn, $sql);
-$recipes = mysqli_fetch_all($result, MYSQLI_ASSOC);
+try {
+  $recipes = all_recipes($conn);
+  $ingredients = ingredients_by_recipe($conn);
+} catch (mysqli_sql_exception $e) {
+  error_log($e->getMessage());
+  http_response_code(500);
+  exit('Something went wrong. Please try again later.');
+}
 ?>
 
 <!DOCTYPE html>
@@ -20,20 +25,13 @@ $recipes = mysqli_fetch_all($result, MYSQLI_ASSOC);
 </head>
 <body>
   <h1>Recipes</h1>
+  <p><a href="index.php">Back to Home</a></p>
 
   <?php if (count($recipes) === 0): ?>
     <p>No recipes yet.</p>
   <?php else: ?>
-    <ul>
-      <?php foreach ($recipes as $recipe): ?>
-        <li>
-          <h2><?= htmlspecialchars($recipe['title']) ?></h2>
-          <p><?= htmlspecialchars($recipe['subtitle'] ?? '') ?></p>
-          <p>Category: <?= htmlspecialchars($recipe['category']) ?></p>
-        </li>
-      <?php endforeach; ?>
-    </ul>
+    <p>Showing <?= count($recipes) ?> recipes.</p>
+    <?php require __DIR__ . '/inc/recipe-list.php'; ?>
   <?php endif; ?>
-  <p><a href="index.php">Back to Home</a></p>
 </body>
 </html>

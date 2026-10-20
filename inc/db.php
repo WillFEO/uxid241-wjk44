@@ -19,6 +19,9 @@ try {
   );
   mysqli_set_charset($conn, 'utf8mb4');
 } catch (mysqli_sql_exception $e) {
-  exit('Connection failed: ' . $e->getMessage());
+  // Real reason goes to the private error log; the visitor gets a generic 500
+  error_log('Database connection failed: ' . $e->getMessage());
+  http_response_code(500);
+  exit('Something went wrong. Please try again later.');
 }
 ?>

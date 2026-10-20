@@ -1,15 +1,15 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
-function get_value(string $key): string {
-  return trim($_GET[$key] ?? '');
-}
+// AI use: search query and results drafted with Claude (Anthropic), reviewed and tested by me.
 
-function e(string $value): string {
-  return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-}
+require __DIR__ . '/inc/db.php';
+require __DIR__ . '/inc/functions.php';
 
 $q = '';
 $errors = [];
+$recipes = [];
+$ingredients = [];
 $success = false;
 
 if (isset($_GET['q'])) {
@@ -24,6 +24,14 @@ if (isset($_GET['q'])) {
   }
 
   if (empty($errors)) {
+    try {
+      $recipes = search_recipes($conn, $q);
+      $ingredients = ingredients_by_recipe($conn);
+    } catch (mysqli_sql_exception $e) {
+      error_log($e->getMessage());
+      http_response_code(500);
+      exit('Something went wrong. Please try again later.');
+    }
     $success = true;
   }
 }
@@ -48,15 +56,19 @@ if (isset($_GET['q'])) {
     </ul>
   <?php endif; ?>
 
-  <?php if ($success): ?>
-    <p>You searched for: <?= e($q) ?></p>
-    <p>Recipe results will appear here once the database infrastructure is set up.</p>
-  <?php endif; ?>
-
   <form action="search.php" method="get">
     <label for="search-input">Search for a recipe:</label>
     <input type="text" id="search-input" name="q" value="<?= e($q) ?>" required>
     <button type="submit">Search</button>
   </form>
+
+  <?php if ($success): ?>
+    <p><?= count($recipes) ?> result(s) for "<?= e($q) ?>"</p>
+    <?php if (count($recipes) === 0): ?>
+      <p>No recipes match that search. Try an ingredient like "garlic" or a category like "beef".</p>
+    <?php else: ?>
+      <?php require __DIR__ . '/inc/recipe-list.php'; ?>
+    <?php endif; ?>
+  <?php endif; ?>
 </body>
 </html>
