@@ -27,7 +27,6 @@ if (isset($_GET['q'])) {
     $success = true;
   }
 }
-
 ?>
 
 <!DOCTYPE html>
