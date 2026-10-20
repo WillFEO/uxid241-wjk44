@@ -6,7 +6,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 20, 2026 at 08:50 PM
+-- Generation Time: Oct 20, 2026 at 11:42 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -512,6 +512,7 @@ CREATE TABLE `recipes` (
   `id` int(11) NOT NULL,
   `title` varchar(120) NOT NULL,
   `subtitle` varchar(120) DEFAULT NULL,
+  `servings` tinyint(3) UNSIGNED NOT NULL DEFAULT 2,
   `category_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -520,47 +521,47 @@ CREATE TABLE `recipes` (
 -- Dumping data for table `recipes`
 --
 
-INSERT INTO `recipes` (`id`, `title`, `subtitle`, `category_id`, `created_at`) VALUES
-(1, 'Ancho-Orange Chicken', 'with Kale Rice & Roasted Carrots', 2, '2026-10-20 18:42:04'),
-(2, 'Beef Medallions & Mushroom Sauce', 'with Mashed Potatoes', 1, '2026-10-20 18:42:04'),
-(3, 'Broccoli & Basil Pesto Sandwiches', 'with Romaine & Citrus Salad', 6, '2026-10-20 18:42:04'),
-(4, 'Broccoli & Mozzarella Calzones', 'with Caesar Salad', 6, '2026-10-20 18:42:04'),
-(5, 'Bucatini Alfredo', 'with Broccoli', 6, '2026-10-20 18:42:04'),
-(6, 'Bucatini & Tomato Sauce', 'with Roasted Broccoli', 6, '2026-10-20 18:42:04'),
-(7, 'Cheesy Enchiladas Rojas', 'with Mushrooms & Kale', 6, '2026-10-20 18:42:04'),
-(8, 'Crispy Fish Sandwiches', 'with Tartar Sauce & Roasted Sweet Potato Wedges', 3, '2026-10-20 18:42:04'),
-(9, 'General Tso\'s Chicken', 'with Bok Choy & Jasmine Rice', 2, '2026-10-20 18:42:04'),
-(10, 'Hoisin-Glazed Pork Chops', 'with Stir-Fried Vegetables & Wonton Noodles', 4, '2026-10-20 18:42:04'),
-(11, 'Honey-Butter Barramundi', 'with Za\'atar Roasted Vegetables', 3, '2026-10-20 18:42:04'),
-(12, 'Kale & Ricotta Quiche', 'with Romaine, Apple, & Almond Salad', 6, '2026-10-20 18:42:04'),
-(13, 'Mexican-Spiced Barramundi', 'with Kale, Sweet Potato, & Avocado Salad', 3, '2026-10-20 18:42:04'),
-(14, 'Mushroom & Potato Tacos', 'with Romaine & Orange Salad', 6, '2026-10-20 18:42:04'),
-(15, 'Parmesan-Crusted Chicken', 'with Mashed Sweet Potatoes & Roasted Broccoli', 2, '2026-10-20 18:42:04'),
-(16, 'Pimento Cheeseburgers', 'with Sweet Potato Oven Fries', 1, '2026-10-20 18:42:04'),
-(17, 'Pork Chorizo Tacos', 'with Cheesy Roasted Potatoes', 4, '2026-10-20 18:42:04'),
-(18, 'Roasted Broccoli & Fregola Sarda Salad', 'with Hard-Boiled Eggs & Tahini Dressing', 6, '2026-10-20 18:42:04'),
-(19, 'Roasted Brussels Sprout & Freekeh Salad', 'with Lemon Yogurt & Barrel-Aged Feta', 6, '2026-10-20 18:42:04'),
-(20, 'Roasted Cauliflower Salad', 'with Caper Brown Butter & Parmesan Breadcrumbs', 6, '2026-10-20 18:42:04'),
-(21, 'Roasted Chicken & Fall Vegetables', 'with Cranberry & Ginger Compote', 2, '2026-10-20 18:42:04'),
-(22, 'Roasted Pork & Broccoli', 'with Apple, Cheese Sauce, & Garlic Breadcrumbs', 4, '2026-10-20 18:42:04'),
-(23, 'Roasted Red Pepper Pasta', 'with Lemon-Parmesan Broccoli', 6, '2026-10-20 18:42:04'),
-(24, 'Roasted Squash Curry', 'with Crispy Mung Beans & Jasmine Rice', 6, '2026-10-20 18:42:04'),
-(25, 'Roasted Turkey Breast & Farro-Endive Salad', 'with Brown Butter Apple Compote', 5, '2026-10-20 18:42:04'),
-(26, 'Salmon & Honey-Glazed Carrots', 'with Lemon-Saffron Yogurt Sauce', 3, '2026-10-20 18:42:04'),
-(27, 'Seared Chicken & Mashed Potatoes', 'with Maple-Glazed Carrots', 2, '2026-10-20 18:42:04'),
-(28, 'Seared Steaks & Garlic Butter', 'with Oven Fries', 1, '2026-10-20 18:42:04'),
-(29, 'Shiitake & Hoisin Beef Burgers', 'with Miso Mayonnaise & Roasted Sweet Potatoes', 1, '2026-10-20 18:42:04'),
-(30, 'Shrimp Fra Diavolo', 'with Lumaca Rigata Pasta', 3, '2026-10-20 18:42:04'),
-(31, 'Smoked Gouda & Mushroom Flatbread', 'with Endive & Apple Salad', 6, '2026-10-20 18:42:04'),
-(32, 'Spicy Chicken Quesadillas', 'with Beet & Orange Salad', 2, '2026-10-20 18:42:04'),
-(33, 'Spicy Pork & Korean Rice Cakes', 'with Bok Choy', 4, '2026-10-20 18:42:04'),
-(34, 'Sweet & Sour Vegetable Stir-Fry', 'with Fried Eggs & Peanuts', 6, '2026-10-20 18:42:04'),
-(35, 'Thai Curry Chicken', 'with Carrots & Bok Choy', 2, '2026-10-20 18:42:04'),
-(36, 'Tilapia & Black Lentil Salad', 'with Lemon Pan Sauce', 3, '2026-10-20 18:42:04'),
-(37, 'Togarashi Chicken Lettuce Cups', 'with Orange & Radishes', 2, '2026-10-20 18:42:04'),
-(38, 'Top Chef Ginger-Marinated Grassfed Steaks', 'with Stir-Fried Vegetables & Jasmine Rice', 1, '2026-10-20 18:42:04'),
-(39, 'Top Chef Seared Grassfed Steaks', 'with Sweet Chili-Glazed Vegetables', 1, '2026-10-20 18:42:04'),
-(40, 'Tuscan Chicken & Green Lentil Stew', 'with Goat Cheese', 2, '2026-10-20 18:42:04');
+INSERT INTO `recipes` (`id`, `title`, `subtitle`, `servings`, `category_id`, `created_at`) VALUES
+(1, 'Ancho-Orange Chicken', 'with Kale Rice & Roasted Carrots', 4, 2, '2026-10-20 18:42:04'),
+(2, 'Beef Medallions & Mushroom Sauce', 'with Mashed Potatoes', 2, 1, '2026-10-20 18:42:04'),
+(3, 'Broccoli & Basil Pesto Sandwiches', 'with Romaine & Citrus Salad', 4, 6, '2026-10-20 18:42:04'),
+(4, 'Broccoli & Mozzarella Calzones', 'with Caesar Salad', 4, 6, '2026-10-20 18:42:04'),
+(5, 'Bucatini Alfredo', 'with Broccoli', 2, 6, '2026-10-20 18:42:04'),
+(6, 'Bucatini & Tomato Sauce', 'with Roasted Broccoli', 2, 6, '2026-10-20 18:42:04'),
+(7, 'Cheesy Enchiladas Rojas', 'with Mushrooms & Kale', 4, 6, '2026-10-20 18:42:04'),
+(8, 'Crispy Fish Sandwiches', 'with Tartar Sauce & Roasted Sweet Potato Wedges', 4, 3, '2026-10-20 18:42:04'),
+(9, 'General Tso\'s Chicken', 'with Bok Choy & Jasmine Rice', 2, 2, '2026-10-20 18:42:04'),
+(10, 'Hoisin-Glazed Pork Chops', 'with Stir-Fried Vegetables & Wonton Noodles', 4, 4, '2026-10-20 18:42:04'),
+(11, 'Honey-Butter Barramundi', 'with Za\'atar Roasted Vegetables', 4, 3, '2026-10-20 18:42:04'),
+(12, 'Kale & Ricotta Quiche', 'with Romaine, Apple, & Almond Salad', 4, 6, '2026-10-20 18:42:04'),
+(13, 'Mexican-Spiced Barramundi', 'with Kale, Sweet Potato, & Avocado Salad', 2, 3, '2026-10-20 18:42:04'),
+(14, 'Mushroom & Potato Tacos', 'with Romaine & Orange Salad', 2, 6, '2026-10-20 18:42:04'),
+(15, 'Parmesan-Crusted Chicken', 'with Mashed Sweet Potatoes & Roasted Broccoli', 4, 2, '2026-10-20 18:42:04'),
+(16, 'Pimento Cheeseburgers', 'with Sweet Potato Oven Fries', 2, 1, '2026-10-20 18:42:04'),
+(17, 'Pork Chorizo Tacos', 'with Cheesy Roasted Potatoes', 2, 4, '2026-10-20 18:42:04'),
+(18, 'Roasted Broccoli & Fregola Sarda Salad', 'with Hard-Boiled Eggs & Tahini Dressing', 2, 6, '2026-10-20 18:42:04'),
+(19, 'Roasted Brussels Sprout & Freekeh Salad', 'with Lemon Yogurt & Barrel-Aged Feta', 2, 6, '2026-10-20 18:42:04'),
+(20, 'Roasted Cauliflower Salad', 'with Caper Brown Butter & Parmesan Breadcrumbs', 2, 6, '2026-10-20 18:42:04'),
+(21, 'Roasted Chicken & Fall Vegetables', 'with Cranberry & Ginger Compote', 4, 2, '2026-10-20 18:42:04'),
+(22, 'Roasted Pork & Broccoli', 'with Apple, Cheese Sauce, & Garlic Breadcrumbs', 2, 4, '2026-10-20 18:42:04'),
+(23, 'Roasted Red Pepper Pasta', 'with Lemon-Parmesan Broccoli', 2, 6, '2026-10-20 18:42:04'),
+(24, 'Roasted Squash Curry', 'with Crispy Mung Beans & Jasmine Rice', 2, 6, '2026-10-20 18:42:04'),
+(25, 'Roasted Turkey Breast & Farro-Endive Salad', 'with Brown Butter Apple Compote', 2, 5, '2026-10-20 18:42:04'),
+(26, 'Salmon & Honey-Glazed Carrots', 'with Lemon-Saffron Yogurt Sauce', 2, 3, '2026-10-20 18:42:04'),
+(27, 'Seared Chicken & Mashed Potatoes', 'with Maple-Glazed Carrots', 2, 2, '2026-10-20 18:42:04'),
+(28, 'Seared Steaks & Garlic Butter', 'with Oven Fries', 4, 1, '2026-10-20 18:42:04'),
+(29, 'Shiitake & Hoisin Beef Burgers', 'with Miso Mayonnaise & Roasted Sweet Potatoes', 4, 1, '2026-10-20 18:42:04'),
+(30, 'Shrimp Fra Diavolo', 'with Lumaca Rigata Pasta', 2, 3, '2026-10-20 18:42:04'),
+(31, 'Smoked Gouda & Mushroom Flatbread', 'with Endive & Apple Salad', 2, 6, '2026-10-20 18:42:04'),
+(32, 'Spicy Chicken Quesadillas', 'with Beet & Orange Salad', 2, 2, '2026-10-20 18:42:04'),
+(33, 'Spicy Pork & Korean Rice Cakes', 'with Bok Choy', 4, 4, '2026-10-20 18:42:04'),
+(34, 'Sweet & Sour Vegetable Stir-Fry', 'with Fried Eggs & Peanuts', 2, 6, '2026-10-20 18:42:04'),
+(35, 'Thai Curry Chicken', 'with Carrots & Bok Choy', 2, 2, '2026-10-20 18:42:04'),
+(36, 'Tilapia & Black Lentil Salad', 'with Lemon Pan Sauce', 2, 3, '2026-10-20 18:42:04'),
+(37, 'Togarashi Chicken Lettuce Cups', 'with Orange & Radishes', 2, 2, '2026-10-20 18:42:04'),
+(38, 'Top Chef Ginger-Marinated Grassfed Steaks', 'with Stir-Fried Vegetables & Jasmine Rice', 2, 1, '2026-10-20 18:42:04'),
+(39, 'Top Chef Seared Grassfed Steaks', 'with Sweet Chili-Glazed Vegetables', 4, 1, '2026-10-20 18:42:04'),
+(40, 'Tuscan Chicken & Green Lentil Stew', 'with Goat Cheese', 2, 2, '2026-10-20 18:42:04');
 
 --
 -- Indexes for dumped tables

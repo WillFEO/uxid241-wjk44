@@ -9,14 +9,15 @@ function e(string $value): string {
   return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
 }
 
-// Read one value from the URL query string, trimmed
+// Read one value from the URL query string, trimmed ('' if missing or not text)
 function get_value(string $key): string {
-  return trim($_GET[$key] ?? '');
+  $value = $_GET[$key] ?? '';
+  return is_string($value) ? trim($value) : '';
 }
 
 // Every recipe with its category name. No user input, so mysqli_query is fine.
 function all_recipes(mysqli $conn): array {
-  $sql = 'SELECT recipes.id, recipes.title, recipes.subtitle, categories.name AS category
+  $sql = 'SELECT recipes.id, recipes.title, recipes.subtitle, recipes.servings, categories.name AS category
           FROM recipes
           INNER JOIN categories ON recipes.category_id = categories.id
           ORDER BY recipes.title';
@@ -27,7 +28,7 @@ function all_recipes(mysqli $conn): array {
 // Recipes whose title, subtitle, category or any ingredient contains $q.
 // $q comes from the user, so it only reaches SQL as a bound parameter.
 function search_recipes(mysqli $conn, string $q): array {
-  $sql = 'SELECT DISTINCT recipes.id, recipes.title, recipes.subtitle, categories.name AS category
+  $sql = 'SELECT DISTINCT recipes.id, recipes.title, recipes.subtitle, recipes.servings, categories.name AS category
           FROM recipes
           INNER JOIN categories ON recipes.category_id = categories.id
           LEFT JOIN ingredients ON ingredients.recipe_id = recipes.id

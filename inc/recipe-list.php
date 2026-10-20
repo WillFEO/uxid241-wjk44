@@ -10,6 +10,7 @@ declare(strict_types=1);
       <h2><?= e($recipe['title']) ?></h2>
       <p><?= e($recipe['subtitle'] ?? '') ?></p>
       <p>Category: <?= e($recipe['category']) ?></p>
+      <p>Serves <?= (int) $recipe['servings'] ?></p>
       <h3>Ingredients</h3>
       <ul>
         <?php foreach ($ingredients[$recipe['id']] ?? [] as $ingredient): ?>
