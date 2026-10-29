@@ -1,0 +1,226 @@
+/* style.css: one stylesheet for every page.
+   AI use: drafted with Claude (Anthropic), reviewed and tested by me. */
+
+/* Fonts, loaded from the repo's fonts folder (paths are relative to this file) */
+@font-face {
+  font-family: "Patrick Hand";
+  src: url("../fonts/Patrick_Hand/PatrickHand-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Old Standard TT";
+  src: url("../fonts/Old_Standard_TT/OldStandardTT-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Old Standard TT";
+  src: url("../fonts/Old_Standard_TT/OldStandardTT-Bold.ttf") format("truetype");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Old Standard TT";
+  src: url("../fonts/Old_Standard_TT/OldStandardTT-Italic.ttf") format("truetype");
+  font-style: italic;
+}
+
+/* Colors live in one place; change a value here and every page follows */
+:root {
+  --cream: #EDDFC9;
+  --ink: #161925;
+  --yellow: #E8B725;
+  --green: #646536;
+  --card: #F7EFE2;
+}
+
+/* Base */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  background-color: var(--cream);
+  color: var(--ink);
+  font-family: "Old Standard TT", Georgia, serif;
+  font-size: 19px;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-family: "Patrick Hand", "Comic Sans MS", cursive;
+  font-weight: normal;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 3rem;
+  color: var(--green);
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+p,
+ul,
+img {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+a {
+  color: var(--green);
+}
+
+a:hover {
+  color: var(--ink);
+}
+
+/* Navigation links along the top of a page */
+nav {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  font-family: "Patrick Hand", cursive;
+  font-size: 1.25rem;
+}
+
+/* Search form: label, box and button in a row that wraps on small screens */
+.search-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.search-form label {
+  font-weight: bold;
+}
+
+.search-form input {
+  flex: 1;
+  min-width: 200px;
+  padding: 8px 12px;
+  border: 2px solid var(--green);
+  border-radius: 8px;
+  background-color: var(--card);
+  font: inherit;
+}
+
+.search-form button {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--yellow);
+  color: var(--ink);
+  font-family: "Patrick Hand", cursive;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.search-form button:hover {
+  background-color: var(--green);
+  color: var(--cream);
+}
+
+/* Recipe grid on the all-recipes and search pages: 1 column on phones, 2 on tablets, 3 on wide screens */
+.recipe-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 600px) {
+  .recipe-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .recipe-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.recipe-card {
+  padding: 16px;
+  border-top: 6px solid var(--yellow);
+  border-radius: 8px;
+  background-color: var(--card);
+}
+
+.recipe-card a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.recipe-card a:hover h2 {
+  color: var(--green);
+}
+
+.recipe-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.recipe-card h2 {
+  font-size: 1.6rem;
+}
+
+.recipe-card p {
+  margin-bottom: 8px;
+}
+
+.servings {
+  color: var(--green);
+  font-weight: bold;
+}
+
+/* Single recipe page */
+.meta,
+.ingredients {
+  font-weight: bold;
+}
+
+/* Yellow offset block behind every photo on a recipe page */
+.recipe-page img {
+  margin-bottom: 24px;
+  box-shadow: 8px 8px 0 var(--yellow);
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  font-style: italic;
+}
+
+.step {
+  margin-bottom: 32px;
+  padding-top: 16px;
+  border-top: 2px solid var(--green);
+}
+
+.step img {
+  max-width: 550px;
+}

@@ -17,7 +17,7 @@ function get_value(string $key): string {
 
 // Every recipe with its category name. No user input, so mysqli_query is fine.
 function all_recipes(mysqli $conn): array {
-  $sql = 'SELECT recipes.id, recipes.title, recipes.subtitle, recipes.servings, categories.name AS category
+  $sql = 'SELECT recipes.id, recipes.title, recipes.subtitle, recipes.servings, recipes.main_image, categories.name AS category
           FROM recipes
           INNER JOIN categories ON recipes.category_id = categories.id
           ORDER BY recipes.title';
@@ -28,7 +28,7 @@ function all_recipes(mysqli $conn): array {
 // Recipes whose title, subtitle, category or any ingredient contains $q.
 // $q comes from the user, so it only reaches SQL as a bound parameter.
 function search_recipes(mysqli $conn, string $q): array {
-  $sql = 'SELECT DISTINCT recipes.id, recipes.title, recipes.subtitle, recipes.servings, categories.name AS category
+  $sql = 'SELECT DISTINCT recipes.id, recipes.title, recipes.subtitle, recipes.servings, recipes.main_image, categories.name AS category
           FROM recipes
           INNER JOIN categories ON recipes.category_id = categories.id
           LEFT JOIN ingredients ON ingredients.recipe_id = recipes.id
@@ -42,18 +42,36 @@ function search_recipes(mysqli $conn, string $q): array {
   return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
-// All ingredient lines, grouped by recipe: [recipe_id => [row, row, ...]]
-function ingredients_by_recipe(mysqli $conn): array {
-  $sql = 'SELECT recipe_id, quantity, unit, name
-          FROM ingredients
-          ORDER BY recipe_id, sort_order';
-  $rows = mysqli_fetch_all(mysqli_query($conn, $sql), MYSQLI_ASSOC);
+// One recipe with its category name and image paths, or null if no recipe has this id.
+// $id comes from the URL, so it only reaches SQL as a bound parameter.
+function find_recipe(mysqli $conn, int $id): ?array {
+  $sql = 'SELECT recipes.id, recipes.title, recipes.subtitle, recipes.servings,
+                 recipes.main_image, recipes.ingredients_image, categories.name AS category
+          FROM recipes
+          INNER JOIN categories ON recipes.category_id = categories.id
+          WHERE recipes.id = ?';
+  $result = mysqli_execute_query($conn, $sql, [$id]);
+  return mysqli_fetch_assoc($result);
+}
 
-  $grouped = [];
-  foreach ($rows as $row) {
-    $grouped[$row['recipe_id']][] = $row;
-  }
-  return $grouped;
+// One recipe's ingredient lines, in recipe order
+function recipe_ingredients(mysqli $conn, int $recipe_id): array {
+  $sql = 'SELECT quantity, unit, name
+          FROM ingredients
+          WHERE recipe_id = ?
+          ORDER BY sort_order';
+  $result = mysqli_execute_query($conn, $sql, [$recipe_id]);
+  return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
+// One recipe's steps, in order. title and image can be NULL.
+function recipe_steps(mysqli $conn, int $recipe_id): array {
+  $sql = 'SELECT step_number, title, instructions, image
+          FROM steps
+          WHERE recipe_id = ?
+          ORDER BY step_number';
+  $result = mysqli_execute_query($conn, $sql, [$recipe_id]);
+  return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
 // One ingredient row as a line of text, e.g. "2 cloves Garlic" or "1 Lime" (no unit)

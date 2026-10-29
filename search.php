@@ -9,7 +9,6 @@ require __DIR__ . '/inc/functions.php';
 $q = '';
 $errors = [];
 $recipes = [];
-$ingredients = [];
 $success = false;
 
 if (isset($_GET['q'])) {
@@ -26,7 +25,6 @@ if (isset($_GET['q'])) {
   if (empty($errors)) {
     try {
       $recipes = search_recipes($conn, $q);
-      $ingredients = ingredients_by_recipe($conn);
     } catch (mysqli_sql_exception $e) {
       error_log($e->getMessage());
       http_response_code(500);
@@ -43,10 +41,11 @@ if (isset($_GET['q'])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Search Results - UXID241 Recipe Site</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <h1>Recipe Search</h1>
-  <p><a href="index.php">Back to home</a></p>
+  <nav><a href="index.php">Back to home</a></nav>
 
   <?php if (!empty($errors)): ?>
     <ul>
@@ -56,7 +55,7 @@ if (isset($_GET['q'])) {
     </ul>
   <?php endif; ?>
 
-  <form action="search.php" method="get">
+  <form class="search-form" action="search.php" method="get">
     <label for="search-input">Search for a recipe:</label>
     <input type="text" id="search-input" name="q" value="<?= e($q) ?>" required>
     <button type="submit">Search</button>

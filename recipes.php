@@ -8,7 +8,6 @@ require __DIR__ . '/inc/functions.php';
 
 try {
   $recipes = all_recipes($conn);
-  $ingredients = ingredients_by_recipe($conn);
 } catch (mysqli_sql_exception $e) {
   error_log($e->getMessage());
   http_response_code(500);
@@ -22,10 +21,11 @@ try {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Recipes</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <h1>Recipes</h1>
-  <p><a href="index.php">Back to Home</a></p>
+  <nav><a href="index.php">Back to Home</a></nav>
 
   <?php if (count($recipes) === 0): ?>
     <p>No recipes yet.</p>
