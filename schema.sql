@@ -1,4 +1,4 @@
--- schema.sql: exported from phpMyAdmin. Creates the cookbook database (categories, recipes, ingredients) with seed data.
+-- schema.sql: exported from phpMyAdmin. Creates the cookbook database (categories, recipes, ingredients, steps, users) with seed data.
 -- AI use: schema and seed rows drafted with Claude (Anthropic) from my recipe workbook, then loaded and exported by me.
 
 -- phpMyAdmin SQL Dump
@@ -6,7 +6,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 28, 2026 at 10:13 PM
+-- Generation Time: Nov 05, 2026 at 08:39 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -823,6 +823,27 @@ INSERT INTO `steps` (`id`, `recipe_id`, `step_number`, `title`, `instructions`, 
 (233, 40, 5, 'Warm the chicken in the stew', 'Return the cooked chicken (and any juices from the cutting board) to the pan of cooked vegetables, nestling it into the stew. Cook on medium, covered, 2 to 3 minutes, or until the chicken is warmed through. Transfer the chicken back to the cutting board.', NULL),
 (234, 40, 6, 'Slice the chicken & serve your dish', 'Slice the cooked chicken crosswise. Add the cooked lentils and vinegar to the pan of cooked vegetables. Stir to combine. Season with salt and pepper to taste. Serve the finished lentils and vegetables topped with the sliced chicken. Garnish with the cheese. Enjoy!', 'images-renamed/tuscan-chicken-green-lentil-stew/step-6.jpg');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `email`, `password_hash`, `created_at`) VALUES
+(1, 'admin1@example.com', '$2y$10$1V/KoItsYRF2UfUhMw2ha.HNe9waSjUlo/OwTeIHbsC8QF0Ty5wOa', '2026-11-05 19:35:01');
+
 --
 -- Indexes for dumped tables
 --
@@ -856,6 +877,13 @@ ALTER TABLE `steps`
   ADD KEY `recipe_id` (`recipe_id`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -882,6 +910,12 @@ ALTER TABLE `recipes`
 --
 ALTER TABLE `steps`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=235;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

@@ -9,7 +9,8 @@
 
 @font-face {
   font-family: "Old Standard TT";
-  src: url("../fonts/Old_Standard_TT/OldStandardTT-Regular.ttf") format("truetype");
+  src: url("../fonts/Old_Standard_TT/OldStandardTT-Regular.ttf")
+    format("truetype");
 }
 
 @font-face {
@@ -20,17 +21,19 @@
 
 @font-face {
   font-family: "Old Standard TT";
-  src: url("../fonts/Old_Standard_TT/OldStandardTT-Italic.ttf") format("truetype");
+  src: url("../fonts/Old_Standard_TT/OldStandardTT-Italic.ttf")
+    format("truetype");
   font-style: italic;
 }
 
 /* Colors live in one place; change a value here and every page follows */
 :root {
-  --cream: #EDDFC9;
+  --cream: #eddfc9;
   --ink: #161925;
-  --yellow: #E8B725;
+  --yellow: #e8b725;
   --green: #646536;
-  --card: #F7EFE2;
+  --card: #f7efe2;
+  --red: #b3261e;
 }
 
 /* Base */
@@ -103,22 +106,21 @@ nav {
   font-size: 1.25rem;
 }
 
-/* Search form: label, box and button in a row that wraps on small screens */
-.search-form {
+/* AI use: form and message styles below written with Claude (Anthropic), Week 6. */
+/* Every form (search, log in, register): label, box and button stacked in a column, capped at 400px wide */
+form {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  flex-direction: column;
+  max-width: 400px;
   gap: 12px;
   margin-bottom: 24px;
 }
 
-.search-form label {
+form label {
   font-weight: bold;
 }
 
-.search-form input {
-  flex: 1;
-  min-width: 200px;
+form input {
   padding: 8px 12px;
   border: 2px solid var(--green);
   border-radius: 8px;
@@ -126,7 +128,8 @@ nav {
   font: inherit;
 }
 
-.search-form button {
+form button {
+  align-self: flex-start;
   padding: 8px 20px;
   border: none;
   border-radius: 8px;
@@ -137,9 +140,20 @@ nav {
   cursor: pointer;
 }
 
-.search-form button:hover {
+form button:hover {
   background-color: var(--green);
   color: var(--cream);
+}
+
+/* Messages above the log in / register forms */
+.error {
+  color: var(--red);
+  font-weight: bold;
+}
+
+.message {
+  color: var(--green);
+  font-weight: bold;
 }
 
 /* Recipe grid on the all-recipes and search pages: 1 column on phones, 2 on tablets, 3 on wide screens */

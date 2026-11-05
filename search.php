@@ -55,7 +55,7 @@ if (isset($_GET['q'])) {
     </ul>
   <?php endif; ?>
 
-  <form class="search-form" action="search.php" method="get">
+  <form action="search.php" method="get">
     <label for="search-input">Search for a recipe:</label>
     <input type="text" id="search-input" name="q" value="<?= e($q) ?>" required>
     <button type="submit">Search</button>

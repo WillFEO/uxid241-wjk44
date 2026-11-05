@@ -11,11 +11,12 @@
 <body>
   <h1>Welcome to the UXID241 Recipe Site</h1>
   <p>Explore a variety of delicious recipes and cooking tips!</p>
-  <form class="search-form" action="search.php" method="get">
+  <form action="search.php" method="get">
     <label for="search-input">Search for a recipe:</label>
     <input type="text" id="search-input" name="q" required>
     <button type="submit">Search</button>
   </form>
-  <nav><a href="recipes.php">Browse all recipes</a></nav>
+  <nav><a href="recipes.php">Browse All Recipes</a></nav>
+  <nav><a href="log-in.php">Log In or Register Here</a></nav>
 </body>
 </html>
