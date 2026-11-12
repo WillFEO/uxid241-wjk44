@@ -15,6 +15,12 @@ function get_value(string $key): string {
   return is_string($value) ? trim($value) : '';
 }
 
+//Read one value from a post, trimmed ('' if missing or not text)
+function post_value(string $key): string {
+  $value = $_POST[$key] ?? '';
+  return is_string($value) ? trim($value) : '';
+}
+
 // Every recipe with its category name. No user input, so mysqli_query is fine.
 function all_recipes(mysqli $conn): array {
   $sql = 'SELECT recipes.id, recipes.title, recipes.subtitle, recipes.servings, recipes.main_image, categories.name AS category
@@ -46,7 +52,7 @@ function search_recipes(mysqli $conn, string $q): array {
 // $id comes from the URL, so it only reaches SQL as a bound parameter.
 function find_recipe(mysqli $conn, int $id): ?array {
   $sql = 'SELECT recipes.id, recipes.title, recipes.subtitle, recipes.servings,
-                 recipes.main_image, recipes.ingredients_image, categories.name AS category
+                 recipes.main_image, recipes.ingredients_image, recipes.category_id, categories.name AS category
           FROM recipes
           INNER JOIN categories ON recipes.category_id = categories.id
           WHERE recipes.id = ?';
@@ -81,5 +87,53 @@ function format_ingredient(array $ingredient): string {
     $line .= ' ' . $ingredient['unit'];
   }
   return $line . ' ' . $ingredient['name'];
+}
+
+// Read and clean the recipe form fields from POST (blank subtitle becomes null, bad numbers become false)
+function read_recipe_form(): array {
+  $title = post_value('title');
+  $subtitle = post_value('subtitle');
+  $subtitle = $subtitle === '' ? null : $subtitle;
+  $category = filter_var(post_value('category'), FILTER_VALIDATE_INT);
+  $servings = filter_var(post_value('servings'), FILTER_VALIDATE_INT, ['options' => ['min_range' => 1, 'max_range' => 12]]);
+
+  return [
+    'title' => $title,
+    'subtitle' => $subtitle,
+    'category' => $category,
+    'servings' => $servings
+  ];
+}
+
+// Check the cleaned recipe fields; returns a list of error messages (empty = valid). AI use: category check drafted with Claude.
+function validate_recipe(mysqli $conn, string $title, ?string $subtitle, int|false $category, int|false $servings): array {
+  $errors = [];
+
+  if ($title === '') {
+    $errors[] = 'Title is required.';
+  }
+  elseif (mb_strlen($title) > 120) {
+    $errors[] = 'Title must be no more than 120 characters long.';
+  }
+
+  if ($subtitle !== null && mb_strlen($subtitle) > 120) {
+    $errors[] = 'Subtitle must be no more than 120 characters long.';
+  }
+
+  if (!$category) {
+    $errors[] = 'Category is required.';
+  }
+  else {
+    $check = mysqli_execute_query($conn, 'SELECT id FROM categories WHERE id = ?', [$category]);
+    if (mysqli_num_rows($check) === 0) {
+      $errors[] = 'Category does not exist, choose a valid category';
+    }
+  }
+
+  if (empty($servings)) {
+    $errors[] = 'Servings must be a whole number from 1 to 12.';
+  }
+
+  return $errors;
 }
 ?>
