@@ -2,7 +2,7 @@
 
 ## Project Description - Cookbook
 
-A server-side online cookbook built with PHP and MySQL for UXID241 (Scripting for IDM II) at Drexel University. As of the beta, visitors can browse all 40 recipes, search them by keyword, and open any recipe to see its ingredients and step-by-step photos, all without logging in. Admins log in to a session-protected area where they can add, edit, and delete recipes. Every database query that uses visitor or admin input goes through a prepared statement, passwords are stored only as `password_hash` hashes, and everything printed to the page is escaped with `htmlspecialchars`. The finished, polished site is the week 10 final.
+A server-side online cookbook built with PHP and MySQL for UXID241 (Scripting for IDM II) at Drexel University. As of the beta, visitors can browse all 40 recipes, search them by keyword, and open any recipe to see its ingredients and step-by-step photos, all without logging in. Admins log in to a session-protected area where they can add, edit, and delete recipes. Every database query that uses visitor or admin input goes through a prepared statement, passwords are stored only as `password_hash` hashes, and everything printed to the page is escaped with `htmlspecialchars`.
 
 ## How to run locally
 
