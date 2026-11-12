@@ -61,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
   <h1>Admin Panel: Logged in as <?= e($user['email']) ?></h1>
   <p>Welcome to the admin page!</p>
   <h2>Admin Actions</h2>
+  <h3>Create New Recipe</h3>
   <?php if ($errors): ?>
     <ul class="error">
       <?php foreach ($errors as $error): ?>
@@ -85,16 +86,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     <input type="number" id="servings" name="servings" value="<?= (int)$servings ?>" min="1" max="12" required>
     <button type="submit" name="action" value="create">Create Recipe</button>
   </form>
-  <h2>All Recipes</h2>
-  <ul>
+  <h3>Manage All Recipes</h3>
+  <ul class="admin-list">
     <?php foreach ($all_recipes as $recipe): ?>
       <li>
-        <a href="recipe.php?id=<?= (int)$recipe['id'] ?>"><?= e($recipe['title']) ?></a>
-        <a href="edit-recipe.php?id=<?= (int)$recipe['id'] ?>">Edit</a>
+        <a class="admin-title" href="recipe.php?id=<?= (int)$recipe['id'] ?>"><?= e($recipe['title']) ?></a>
+        <a class="admin-edit" href="edit-recipe.php?id=<?= (int)$recipe['id'] ?>">Edit</a>
         <?php // AI use: POST delete form with hidden id suggested by Claude (Anthropic), reviewed and tested by me ?>
         <form method="post" action="admin.php" onsubmit="return confirm('Are you sure you want to delete this recipe?');">
           <input type="hidden" name="id" value="<?= (int)$recipe['id'] ?>">
-          <button type="submit" name="action" value="delete">Delete</button>
+          <button class="admin-delete" type="submit" name="action" value="delete">Delete</button>
         </form>
       </li>
     <?php endforeach; ?>

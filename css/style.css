@@ -120,7 +120,8 @@ form label {
   font-weight: bold;
 }
 
-form input {
+form input,
+form select {
   padding: 8px 12px;
   border: 2px solid var(--green);
   border-radius: 8px;
@@ -237,4 +238,67 @@ form button:hover {
 
 .step img {
   max-width: 550px;
+}
+
+/* AI use: admin recipe list styles written with Claude (Anthropic), Week 7. */
+/* Admin "Manage All Recipes" list: one row per recipe, title on the left, Edit and Delete on the right, thin line between rows */
+.admin-list {
+  max-width: 800px;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--green);
+}
+
+.admin-list li {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--green);
+}
+
+/* flex: 1 lets the title take the leftover space, pushing Edit and Delete to the right */
+.admin-title {
+  flex: 1;
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.admin-title:hover {
+  text-decoration: underline;
+}
+
+/* The delete form sits inline in the row instead of stacking like the other forms */
+.admin-list form {
+  margin: 0;
+}
+
+.admin-edit,
+.admin-list .admin-delete {
+  padding: 4px 16px;
+  border: 2px solid var(--green);
+  border-radius: 8px;
+  background-color: transparent;
+  color: var(--green);
+  font-family: "Patrick Hand", cursive;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.admin-edit:hover {
+  background-color: var(--green);
+  color: var(--cream);
+}
+
+.admin-list .admin-delete {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.admin-list .admin-delete:hover {
+  background-color: var(--red);
+  color: var(--cream);
 }

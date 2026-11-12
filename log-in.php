@@ -33,12 +33,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
   }
 
   if ($action === 'register'){
-    $hash = password_hash($plain, PASSWORD_DEFAULT);
-    try {
-      mysqli_execute_query($conn, 'INSERT INTO users (email, password_hash) VALUES (?, ?)', [$email, $hash]);
-      $message = 'Registration successful. You can now log in.';
-    } catch (mysqli_sql_exception $e) {
-      $error = 'That email is already registered. Please log in or use a different email.';
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      $error = 'Invalid email format';
+    }
+    elseif(mb_strlen($plain) < 8) {
+      $error = 'Password must be at least 8 characters long';
+    }
+    else {
+      try {
+        $hash = password_hash($plain, PASSWORD_DEFAULT);
+        mysqli_execute_query($conn, 'INSERT INTO users (email, password_hash) VALUES (?, ?)', [$email, $hash]);
+        $message = 'Registration successful. You can now log in.';
+      } catch (mysqli_sql_exception $e) {
+        $error = 'That email is already registered. Please log in or use a different email.';
+      }
     }
   }
 }
@@ -68,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     <label for="register-email">Email:</label>
     <input type="email" id="register-email" name="email" required>
     <label for="register-password">Password:</label>
-    <input type="password" id="register-password" name="password" required>
+    <input type="password" id="register-password" name="password" minlength="8" required>
     <button type="submit" name="action" value="register">Register</button>
   </form>
   <?php if ($error): ?>
